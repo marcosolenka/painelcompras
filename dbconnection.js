@@ -14,7 +14,7 @@ async function getConnection() {
       throw new Error("Variável de ambiente ORACLE não definida");
     }
 
-    oracledb.initOracleClient({ libDIr });
+    oracledb.initOracleClient({ libDir });
 
     const connection = await oracledb.getConnection({
       user: user,
@@ -27,4 +27,4 @@ async function getConnection() {
   }
 }
 
-//module.exports = { getConnection };
+export { getConnection };
