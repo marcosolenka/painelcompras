@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Painel Compras</title>
+    <link href="/src/output.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="max-w-sm rounded shadow-lg bg-red-600 px-6 py-4">
+      <div class="grid justify-items-end -mt-3">
+        <img
+          src="/src/assets/resources/images/close.png"
+          class="hover:bg-red-700 p-2 rounded"
+          id="icone-fechar"
+        />
+      </div>
+      <div class="font-semibold mb-2 text-center text-gray-200 rounded p-2">
+        <p>
+          Ocorreu um erro durante a leitura de dados. Contate o administrador!
+        </p>
+        <p id="statusErroLeituraAPI" class="text-sm font-thin p-1"></p>
+      </div>
+    </div>
+  </body>
+</html>
