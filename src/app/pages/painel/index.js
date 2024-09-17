@@ -1,4 +1,4 @@
-const apiUrl = "http://localhost:3030/api/purchaseshipments";
+const apiUrl = "http://172.16.28.8:3030/api/purchaseshipments";
 let purchaseshipments = [];
 //FAZ A REQUISIÇÃO DOS DADOS PARA API E TRATA OS ERROS
 $.get(apiUrl)
@@ -65,8 +65,9 @@ $.get(apiUrl)
     });
   });
 
+//FUNCAO RESPONSAVEL POR PEGAR OS DADOS DA API E ADICIONAR NA TABELA PURCHASESHIPMENTSTABLE
 function addDataToRequestTable() {
-  $("#purchaseShipmentsTable").find("tr:gt(0)").remove();
+  $("#purchaseShipmentsData").find("tr:gt(0)").remove();
 
   // Filtrar itens únicos com base na propriedade 'nr_solic_compra'
   const uniqueShipments = purchaseshipments.filter(
@@ -80,19 +81,25 @@ function addDataToRequestTable() {
 
   $.each(uniqueShipments, function (index, item) {
     if (item.status != 3) {
+      
+      const datePart = item.dt_liberacao.split('T')[0]; 
+      const [year, month, day] = datePart.split('-');
+      const formattedDate = `${day}/${month}/${year}`;
+  
       const newRow = `
-          <tr>
-            <td>${item.nr_solic_compra}</td>
-            <td>${item.dt_liberacao}</td>
-            <td>${item.cd_pessoa_solicitante}</td>
-            <td>${item.ds_setor}</td>
-            <td>${item.tipo_compra}</td>
-            <td>${item.status}</td>
-          </tr>
-        `;
-      $("#purchaseShipmentsTable").append(newRow);
+        <tr class="border">
+          <td class="border border-slate-300 px-4 py-2">${item.nr_solic_compra}</td>
+          <td class="border border-slate-300 px-4 py-2">${formattedDate}</td>
+          <td class="border border-slate-300 px-4 py-2">${item.ds_solicitante}</td>
+          <td class="border border-slate-300 px-4 py-2">${item.ds_setor}</td>
+          <td class="border border-slate-300 px-4 py-2">${item.tipo_compra}</td>
+          <td class="border border-slate-300 px-4 py-2">${item.status}</td>
+        </tr>
+      `;
+      $("#purchaseShipmentsData").append(newRow);
     }
   });
+  
 }
 
 //FECHA O MODAL AO CLICAR NO X

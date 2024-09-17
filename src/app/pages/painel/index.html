@@ -32,19 +32,24 @@
       </div>
     </div>
 
-    <table class="table-auto border border-slate-400">
-      <thead class="bg-gray-300">
-        <tr>
-          <th class="border border-slate-300">Solicitação</th>
-          <th>Data Liberação</th>
-          <th>Solicitante</th>
-          <th>Setor</th>
-          <th>Tipo de Compra</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody id="purchaseShipmentsTable"></tbody>
-    </table>
+    <div id="tableContainer">
+      <table id="purchaseShipmentsTable" class="table-auto border-collapse border border-slate-400">
+        <thead class="bg-gray-300">
+          <tr>
+            <th class="border border-slate-300 px-4 py-2 text-left">Solicitação</th>
+            <th class="border border-slate-300 px-4 py-2 text-left">Data Liberação</th>
+            <th class="border border-slate-300 px-4 py-2 text-left">Solicitante</th>
+            <th class="border border-slate-300 px-4 py-2 text-left">Setor</th>
+            <th class="border border-slate-300 px-4 py-2 text-left">Tipo de Compra</th>
+            <th class="border border-slate-300 px-4 py-2 text-left">Status</th>
+          </tr>
+        </thead>
+        <tbody id="purchaseShipmentsData"></tbody>
+      </table>
+    </div>
+    
+    <div id="pagination" class="mt-4 flex justify-center space-x-2"></div>
+    
 
     <div
       id="modal"
@@ -52,6 +57,7 @@
     ></div>
 
     <script src="/src/assets/libraries/jquery/jquery-3.7.1.min.js"></script>
+    <script src="/node_modules/datatables.net/js/dataTables.min.js"></script>
     <script src="index.js"></script>
-  </body>
+  </body> 
 </html>
