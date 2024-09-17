@@ -55,20 +55,29 @@ $.get(apiUrl)
     });
     console.log(purchaseshipments);
     addDataToRequestTable();
+      //FUNÇÃO RESPONSAVEL POR APLICAR O PLUGIN DATATABLE DO JQUERY PARA VISUALIZACAO DA TABELA PURCHASESHIPMENTSTABLE
+  $(document).ready(function () {
+    $('#purchaseShipmentsTable').DataTable(({
+      "language": {
+        "lengthMenu": "Mostrando _MENU_ registros por página",
+        "zeroRecords": "Nada Encontrado",
+        "info": "Mostrando página _PAGE_ de _PAGES_",
+        "infoEmpty": "Nenhum dado Disponível",
+        "infoFiltered": "Filtrado de _MAX_ registros no total"
+      }
+    }));
+  });
+
   })
   .fail(function (jqXHR, textStatus, errorThrown) {
     $("#modal").load("/src/app/pages/painel/erroLeituraAPI.html", function () {
       $(this).removeClass("hidden");
       $("#statusErroLeituraAPI").append(
-        `Status: ${jqXHR.status} ${jqXHR.statusText} ${jqXHR.responseText}`
+        `Status: ${jqXHR.responseText}`
       );
     });
   });
 
-  //FUNÇÃO RESPONSAVEL POR APLICAR O PLUGIN DATATABLE DO JQUERY PARA VISUALIZACAO DA TABELA PURCHASESHIPMENTSTABLE
-  $(document).ready(function () {
-    $('#purchaseShipmentsTable').DataTable();
-  });
 
 //FUNCAO RESPONSAVEL POR PEGAR OS DADOS DA API E ADICIONAR NA TABELA PURCHASESHIPMENTSTABLE
 function addDataToRequestTable() {
