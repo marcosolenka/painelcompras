@@ -65,6 +65,11 @@ $.get(apiUrl)
     });
   });
 
+  //FUNÇÃO RESPONSAVEL POR APLICAR O PLUGIN DATATABLE DO JQUERY PARA VISUALIZACAO DA TABELA PURCHASESHIPMENTSTABLE
+  $(document).ready(function () {
+    $('#purchaseShipmentsTable').DataTable();
+  });
+
 //FUNCAO RESPONSAVEL POR PEGAR OS DADOS DA API E ADICIONAR NA TABELA PURCHASESHIPMENTSTABLE
 function addDataToRequestTable() {
   $("#purchaseShipmentsData").find("tr:gt(0)").remove();
