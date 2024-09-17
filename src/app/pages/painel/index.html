@@ -4,9 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Painel Compras</title>
-    <link href="./output.css" rel="stylesheet" />
+    <link href="/src/output.css" rel="stylesheet" />
   </head>
-  <body class="bg-gray-400">
+  <body class="bg-yellow=100">
     <div class="m-4 flex space-x-12">
       <!--SOLICITAÇÕES ABERTAS, QUE NÃO POSSUEM ORDEM DE COMPRA-->
       <div class="max-w-sm rounded overflow-hidden shadow-lg bg-gray-300">
@@ -32,10 +32,25 @@
       </div>
     </div>
 
+    <table class="table-auto border border-slate-400">
+      <thead class="bg-gray-300">
+        <tr>
+          <th class="border border-slate-300">Solicitação</th>
+          <th>Data Liberação</th>
+          <th>Solicitante</th>
+          <th>Setor</th>
+          <th>Tipo de Compra</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="purchaseShipmentsTable"></tbody>
+    </table>
+
     <div
       id="modal"
       class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-70 hidden"
     ></div>
+
     <script src="/src/assets/libraries/jquery/jquery-3.7.1.min.js"></script>
     <script src="index.js"></script>
   </body>
