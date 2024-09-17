@@ -102,12 +102,12 @@ function addDataToRequestTable() {
   
       const newRow = `
         <tr class="border">
-          <td class="border border-slate-300 px-4 py-2">${item.nr_solic_compra}</td>
-          <td class="border border-slate-300 px-4 py-2">${formattedDate}</td>
-          <td class="border border-slate-300 px-4 py-2">${item.ds_solicitante}</td>
-          <td class="border border-slate-300 px-4 py-2">${item.ds_setor}</td>
-          <td class="border border-slate-300 px-4 py-2">${item.tipo_compra}</td>
-          <td class="border border-slate-300 px-4 py-2">${item.status}</td>
+          <td class="border border-slate-700 px-4 py-2">${item.nr_solic_compra}</td>
+          <td class="border border-slate-700 px-4 py-2">${formattedDate}</td>
+          <td class="border border-slate-700 px-4 py-2">${item.ds_solicitante}</td>
+          <td class="border border-slate-700 px-4 py-2">${item.ds_setor}</td>
+          <td class="border border-slate-700 px-4 py-2">${item.tipo_compra}</td>
+          <td class="border border-slate-700 px-4 py-2">${item.status}</td>
         </tr>
       `;
       $("#purchaseShipmentsData").append(newRow);
