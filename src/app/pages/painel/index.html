@@ -5,52 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Painel Compras</title>
     <link href="/src/output.css" rel="stylesheet" />
-    <link href="/node_modules/datatables.net-dt/css/dataTables.dataTables.min.css">
+    <link
+      href="/node_modules/datatables.net-dt/css/dataTables.dataTables.min.css"
+    />
   </head>
-  <body class="bg-gray-900">
-    <div class="m-4 flex space-x-12">
-      <!--SOLICITAÇÕES ABERTAS, QUE NÃO POSSUEM ORDEM DE COMPRA-->
-      <div class="max-w-sm rounded overflow-hidden shadow-lg bg-gray-300">
-        <div class="px-6 py-4">
-          <div class="font-bold text-xl mb-2 text-center bg-gray-200">
-            Solicitações Pendentes
-          </div>
-          <p class="text-4xl font-bold text-gray-500 text-base text-center">
-            235
-          </p>
-        </div>
-      </div>
-      <!--SOLICITAÇÕES EM ANDAMENTO, QUE POSSUEM ORDEM DE COMPRA-->
-      <div class="max-w-sm rounded overflow-hidden shadow-lg bg-gray-300">
-        <div class="px-6 py-4">
-          <div class="font-bold text-xl mb-2 text-center bg-gray-200">
-            Solicitações Em Andamento
-          </div>
-          <p class="text-4xl font-bold text-gray-500 text-base text-center">
-            123
-          </p>
-        </div>
-      </div>
-    </div>
-
+  <body class="bg-blue-900">
     <div id="tableContainer">
-      <table id="purchaseShipmentsTable" class="table-auto border-collapse border border-slate-400 w-full">
-        <thead class="bg-gray-500">
+      <div></div>
+        <div class="m-4 flex space-x-12">
+          <div class="max-w-sm rounded overflow-hidden shadow-lg bg-blue-500 w-60">
+            <div class="px-6 py-4">
+              <div class="font-bold text-xl mb-2 text-center">
+                Abertos
+              </div>
+              <p id="openedRequestsCard" class="text-4xl font-bold text-gray-300 text-base text-center">
+                
+              </p>
+            </div>
+          </div>
+          <div class="max-w-sm rounded overflow-hidden shadow-lg from-bg-blue-100 to bg-blue-800 w-60">
+            <div class="px-6 py-4">
+              <div class="font-bold text-xl mb-2 text-center">
+                Em Andamento
+              </div>
+              <p id="inProgressRequestsCard" class="text-4xl font-bold text-gray-300 text-white text-base text-center">
+              </p>
+            </div>
+          </div>
+          <div class="max-w-sm rounded overflow-hidden shadow-lg bg-green-600 w-60">
+            <div class="px-6 py-4">
+              <div class="font-bold text-xl mb-2 text-center">
+                Baixadas
+              </div>
+              <p id="endedRequestsCard" class="text-4xl font-bold text-gray-300 text-base text-center">
+               
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      <table
+        id="purchaseShipmentsTable"
+        class="table-auto border-collapse border border-slate-400"
+      >
+        <thead class="bg-blue-950 text-white">
           <tr>
-            <th class="border border-slate-300 px-4 py-2 text-left">Solicitação</th>
-            <th class="border border-slate-300 px-4 py-2 text-left">Data Liberação</th>
-            <th class="border border-slate-300 px-4 py-2 text-left">Solicitante</th>
-            <th class="border border-slate-300 px-4 py-2 text-left">Setor</th>
-            <th class="border border-slate-300 px-4 py-2 text-left">Tipo de Compra</th>
-            <th class="border border-slate-300 px-4 py-2 text-left">Status</th>
+            <th class="px-4 py-2 text-left">
+              Solicitação
+            </th>
+            <th class="px-4 py-2 text-left">
+              Data Liberação
+            </th>
+            <th class="px-4 py-2 text-left">
+              Solicitante
+            </th>
+            <th class="px-4 py-2 text-left">Setor</th>
+            <th class="px-4 py-2 text-left">
+              Tipo de Compra
+            </th>
+            <th class="px-4 py-2 text-left">Status</th>
           </tr>
         </thead>
-        <tbody id="purchaseShipmentsData" class="text-white"></tbody>
+        <tbody id="purchaseShipmentsData" class="bg-white"></tbody>
       </table>
     </div>
-    
+
     <div id="pagination" class="mt-4 flex justify-center space-x-2"></div>
-    
 
     <div
       id="modal"
@@ -60,5 +81,5 @@
     <script src="/src/assets/libraries/jquery/jquery-3.7.1.min.js"></script>
     <script src="/node_modules/datatables.net/js/dataTables.min.js"></script>
     <script src="index.js"></script>
-  </body> 
+  </body>
 </html>

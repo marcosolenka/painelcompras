@@ -1,6 +1,6 @@
 const apiUrl = "http://172.16.28.8:3030/api/purchaseshipments";
 let purchaseshipments = [];
-//FAZ A REQUISIÇÃO DOS DADOS PARA API E TRATA OS ERROS
+//FAZ A REQUISIÇÃO DOS DADOS PARA API, TRATA OS ERROS E ADICIONA OS DADOS PARA A TABELA
 $.get(apiUrl)
   .done(function (data) {
     $.each(data, function (index, item) {
@@ -37,10 +37,7 @@ $.get(apiUrl)
         status: null,
       };
 
-      /* 3 = SOLICITACAO BAIXADA
-         2 = TEM COTACAO
-         1 = TEM ORDEM COMPRA
-         0 = ABERTA  */
+      /* 3 = SOLICITACAO BAIXADA 2 = TEM COTACAO 1 = TEM ORDEM COMPRA 0 = ABERTA  */
       if (item.DT_BAIXA) {
         valoresItem.status = 3;
       } else if (item.ORDEM_COMPRA === null) {
@@ -53,33 +50,59 @@ $.get(apiUrl)
 
       purchaseshipments.push(valoresItem);
     });
-    console.log(purchaseshipments);
     addDataToRequestTable();
-      //FUNÇÃO RESPONSAVEL POR APLICAR O PLUGIN DATATABLE DO JQUERY PARA VISUALIZACAO DA TABELA PURCHASESHIPMENTSTABLE
-  $(document).ready(function () {
-    $('#purchaseShipmentsTable').DataTable(({
-      "language": {
-        "lengthMenu": "Mostrando _MENU_ registros por página",
-        "zeroRecords": "Nada Encontrado",
-        "info": "Mostrando página _PAGE_ de _PAGES_",
-        "infoEmpty": "Nenhum dado Disponível",
-        "infoFiltered": "Filtrado de _MAX_ registros no total"
-      }
-    }));
-  });
+    addDataToRequestTableCards();
 
+    //FUNÇÃO RESPONSAVEL POR APLICAR O PLUGIN DATATABLE DO JQUERY PARA VISUALIZACAO DA TABELA PURCHASESHIPMENTSTABLE
+    $(document).ready(function () {
+      $("#purchaseShipmentsTable").DataTable({
+        language: {
+          lengthMenu: "Mostrando _MENU_ registros por página",
+          zeroRecords: "Nada Encontrado",
+          info: "Mostrando página _PAGE_ de _PAGES_",
+          infoEmpty: "Nenhum dado Disponível",
+          infoFiltered: "Filtrado de _MAX_ registros no total",
+        },
+      });
+    });
   })
   .fail(function (jqXHR, textStatus, errorThrown) {
     $("#modal").load("/src/app/pages/painel/erroLeituraAPI.html", function () {
       $(this).removeClass("hidden");
-      $("#statusErroLeituraAPI").append(
-        `Status: ${jqXHR.responseText}`
-      );
+      $("#statusErroLeituraAPI").append(`Status: ${jqXHR.responseText}`);
     });
   });
 
+function addDataToRequestTableCards() {
+  const uniqueShipments = purchaseshipments.filter(
+    (item, index, self) =>
+      index ===
+      self.findIndex((t) => t.nr_solic_compra === item.nr_solic_compra)
+  );
 
-//FUNCAO RESPONSAVEL POR PEGAR OS DADOS DA API E ADICIONAR NA TABELA PURCHASESHIPMENTSTABLE
+  let sumValuesOpened = 0;
+  let sumValuesInProgress = 0;
+  let sumValuesEnded = 0;
+
+  $.each(uniqueShipments, function (index, item) {
+    if (item.status === 0) {
+      sumValuesOpened++;
+    } else if (item.status === 1 || item.status === 2) {
+      sumValuesInProgress++;
+    } else if (item.status === 3) {
+      sumValuesEnded++;
+    }
+  });
+
+  console.log(sumValuesOpened);
+  console.log(sumValuesInProgress);
+  console.log(sumValuesEnded);
+
+  $("#openedRequestsCard").append(sumValuesOpened);
+  $("#inProgressRequestsCard").append(sumValuesInProgress);
+  $("#endedRequestsCard").append(sumValuesEnded);
+}
+
 function addDataToRequestTable() {
   $("#purchaseShipmentsData").find("tr:gt(0)").remove();
 
@@ -90,30 +113,50 @@ function addDataToRequestTable() {
       self.findIndex((t) => t.nr_solic_compra === item.nr_solic_compra)
   );
 
-  // Ordenar o array uniqueShipments em ordem decrescente com base na propriedade 'nr_solic_compra'
   uniqueShipments.sort((a, b) => b.nr_solic_compra - a.nr_solic_compra);
 
   $.each(uniqueShipments, function (index, item) {
     if (item.status != 3) {
-      
-      const datePart = item.dt_liberacao.split('T')[0]; 
-      const [year, month, day] = datePart.split('-');
+      const datePart = item.dt_liberacao.split("T")[0];
+      const [year, month, day] = datePart.split("-");
       const formattedDate = `${day}/${month}/${year}`;
-  
+
+      const tipoCompra = item.tipo_compra ? item.tipo_compra : "Não Informado";
+      let upperSolicitante = item.ds_solicitante.toUpperCase();
+      let upperSetor = item.ds_setor.toUpperCase();
+      let upperTipoCompra = tipoCompra.toUpperCase();
+
+      let statusText;
+      switch (item.status) {
+        case 3:
+          statusText = "SOLICITAÇÃO BAIXADA";
+          break;
+        case 2:
+          statusText = "TEM COTAÇÃO";
+          break;
+        case 1:
+          statusText = "TEM ORDEM COMPRA";
+          break;
+        case 0:
+          statusText = "ABERTA";
+          break;
+        default:
+          statusText = "DESCONHECIDO";
+      }
+
       const newRow = `
         <tr class="border">
           <td class="border border-slate-700 px-4 py-2">${item.nr_solic_compra}</td>
           <td class="border border-slate-700 px-4 py-2">${formattedDate}</td>
-          <td class="border border-slate-700 px-4 py-2">${item.ds_solicitante}</td>
-          <td class="border border-slate-700 px-4 py-2">${item.ds_setor}</td>
-          <td class="border border-slate-700 px-4 py-2">${item.tipo_compra}</td>
-          <td class="border border-slate-700 px-4 py-2">${item.status}</td>
+          <td class="border border-slate-700 px-4 py-2">${upperSolicitante}</td>
+          <td class="border border-slate-700 px-4 py-2">${upperSetor}</td>
+          <td class="border border-slate-700 px-4 py-2">${upperTipoCompra}</td>
+          <td class="border border-slate-700 px-4 py-2">${statusText}</td>
         </tr>
       `;
       $("#purchaseShipmentsData").append(newRow);
     }
   });
-  
 }
 
 //FECHA O MODAL AO CLICAR NO X
