@@ -10,69 +10,57 @@
     />
   </head>
   <body class="bg-blue-900">
-    <div id="tableContainer">
-      <div></div>
-        <div class="m-4 flex space-x-12">
-          <div class="max-w-sm rounded overflow-hidden shadow-lg bg-blue-500 w-60">
-            <div class="px-6 py-4">
-              <div class="font-bold text-xl mb-2 text-center">
-                Abertos
-              </div>
-              <p id="openedRequestsCard" class="text-4xl font-bold text-gray-300 text-base text-center">
-                
-              </p>
-            </div>
-          </div>
-          <div class="max-w-sm rounded overflow-hidden shadow-lg from-bg-blue-100 to bg-blue-800 w-60">
-            <div class="px-6 py-4">
-              <div class="font-bold text-xl mb-2 text-center">
-                Em Andamento
-              </div>
-              <p id="inProgressRequestsCard" class="text-4xl font-bold text-gray-300 text-white text-base text-center">
-              </p>
-            </div>
-          </div>
-          <div class="max-w-sm rounded overflow-hidden shadow-lg bg-green-600 w-60">
-            <div class="px-6 py-4">
-              <div class="font-bold text-xl mb-2 text-center">
-                Baixadas
-              </div>
-              <p id="endedRequestsCard" class="text-4xl font-bold text-gray-300 text-base text-center">
-               
-              </p>
-            </div>
-          </div>
+    <div class="m-4 flex space-x-12">
+      <div class="max-w-sm rounded overflow-hidden shadow-lg bg-blue-500 w-60">
+        <div class="px-6 py-4">
+          <div class="font-bold text-xl mb-2 text-center">Abertos</div>
+          <p
+            id="openedRequestsCard"
+            class="text-4xl font-bold text-white text-base text-center"
+          ></p>
         </div>
       </div>
+      <div
+        class="max-w-sm rounded overflow-hidden shadow-lg from-bg-blue-100 to bg-blue-800 w-60"
+      >
+        <div class="px-6 py-4">
+          <div class="font-bold text-xl mb-2 text-center">Em Andamento</div>
+          <p
+            id="inProgressRequestsCard"
+            class="text-4xl font-bold text-white text-base text-center"
+          ></p>
+        </div>
       </div>
+      <div class="max-w-sm rounded overflow-hidden shadow-lg bg-green-600 w-60">
+        <div class="px-6 py-4">
+          <div class="font-bold text-xl mb-2 text-center">Baixadas</div>
+          <p
+            id="endedRequestsCard"
+            class="text-4xl font-bold text-white text-base text-center"
+          ></p>
+        </div>
+      </div>
+    </div>
+
+    <div id="tableContainer" class="w-full p-6">
       <table
         id="purchaseShipmentsTable"
         class="table-auto border-collapse border border-slate-400"
       >
-        <thead class="bg-blue-950 text-white">
+        <thead class="text-white">
           <tr>
-            <th class="px-4 py-2 text-left">
-              Solicitação
-            </th>
-            <th class="px-4 py-2 text-left">
-              Data Liberação
-            </th>
-            <th class="px-4 py-2 text-left">
-              Solicitante
-            </th>
+            <th class="px-4 py-2 text-left">Solicitação</th>
+            <th class="px-4 py-2 text-left">Data Liberação</th>
+            <th class="px-4 py-2 text-left">Solicitante</th>
             <th class="px-4 py-2 text-left">Setor</th>
-            <th class="px-4 py-2 text-left">
-              Tipo de Compra
-            </th>
+            <th class="px-4 py-2 text-left">Tipo de Compra</th>
             <th class="px-4 py-2 text-left">Status</th>
           </tr>
         </thead>
-        <tbody id="purchaseShipmentsData" class="bg-white"></tbody>
+        <tbody id="purchaseShipmentsData" class="my-2"></tbody>
       </table>
     </div>
-
-    <div id="pagination" class="mt-4 flex justify-center space-x-2"></div>
-
+    <!--RESERVADO PARA MODAIS-->
     <div
       id="modal"
       class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-70 hidden"
