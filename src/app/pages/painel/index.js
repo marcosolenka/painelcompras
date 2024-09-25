@@ -1,8 +1,13 @@
 const apiUrl = "http://172.16.28.8:3030/api/purchaseshipments";
 let purchaseshipments = [];
+
 //FAZ A REQUISIÇÃO DOS DADOS PARA API, TRATA OS ERROS E ADICIONA OS DADOS PARA A TABELA
 getDataAndCreateTable();
-setInterval(getDataAndCreateTable(), 600);
+
+setInterval(function () {
+  location.reload();
+}, 60000);
+
 function getDataAndCreateTable() {
   $.get(apiUrl)
     .done(function (data) {
@@ -55,42 +60,7 @@ function getDataAndCreateTable() {
       });
       addDataToRequestTable();
       addDataToRequestTableCards();
-
-      //FUNÇÃO RESPONSAVEL POR APLICAR O PLUGIN DATATABLE DO JQUERY PARA VISUALIZACAO DA TABELA PURCHASESHIPMENTSTABLE
-      $(document).ready(function () {
-        var table = $("#purchaseShipmentsTable").DataTable({
-          scrollX: false,
-          responsive: true,
-          autoWidth: true,
-          paging: true,
-          pageLength: 10,
-          ordering: true,
-          pagingType: "full_numbers",
-          order: [[6, "desc"]],
-          language: {
-            lengthMenu: "Mostrando _MENU_ registros por página",
-            zeroRecords: "Nada Encontrado",
-            info: "Mostrando página _PAGE_ de _PAGES_",
-            infoEmpty: "Nenhum dado Disponível",
-            infoFiltered: "Filtrado de _MAX_ registros no total",
-            search: "Pesquisar:",
-            paginate: {
-              previous: "<",
-              next: ">",
-            },
-          },
-          initComplete: function () {
-            applyCustomStyles();
-          },
-          drawCallback: function () {
-            applyCustomStyles();
-          },
-        });
-        $(window).on("resize", function () {
-          table.columns.adjust();
-          applyCustomStyles();
-        });
-      });
+      createDataTable();
     })
     .fail(function (jqXHR, textStatus, errorThrown) {
       $("#modal").load(
@@ -114,22 +84,20 @@ function addDataToRequestTableCards() {
   let sumValuesEnded = 0;
 
   $.each(uniqueShipments, function (index, item) {
-    if (item.status === 0) {
+    if (item.status === 0 && item.cd_estabelecimento === 6) {
       sumValuesOpened++;
-    } else if (item.status === 1 || item.status === 2) {
+    } else if (
+      item.status === 1 ||
+      (item.status === 2 && item.cd_estabelecimento === 6)
+    ) {
       sumValuesInProgress++;
-    } else if (item.status === 3) {
+    } else if (item.status === 3 && item.cd_estabelecimento === 6) {
       sumValuesEnded++;
     }
   });
 
-  console.log(sumValuesOpened);
-  console.log(sumValuesInProgress);
-  console.log(sumValuesEnded);
-
   $("#openedRequestsCard").append(sumValuesOpened);
   $("#inProgressRequestsCard").append(sumValuesInProgress);
-  $("#endedRequestsCard").append(sumValuesEnded);
 }
 
 function addDataToRequestTable() {
@@ -232,4 +200,42 @@ function applyCustomStyles() {
       "flex justify-end hover:bg-purple-700 py-2 px-4 bg-purple-800 border rounded-md"
     );
   $("#purchaseShipmentsTable_info").addClass("text-gray-300 text-sm");
+}
+
+function createDataTable() {
+  //FUNÇÃO RESPONSAVEL POR APLICAR O PLUGIN DATATABLE DO JQUERY PARA VISUALIZACAO DA TABELA PURCHASESHIPMENTSTABLE
+  $(document).ready(function () {
+    var table = $("#purchaseShipmentsTable").DataTable({
+      scrollX: false,
+      responsive: true,
+      autoWidth: true,
+      paging: false,
+      pageLength: 10,
+      ordering: true,
+      pagingType: "full_numbers",
+      order: [[6, "desc"]],
+      language: {
+        lengthMenu: "Mostrando _MENU_ registros por página",
+        zeroRecords: "Nada Encontrado",
+        info: "Mostrando página _PAGE_ de _PAGES_",
+        infoEmpty: "Nenhum dado Disponível",
+        infoFiltered: "Filtrado de _MAX_ registros no total",
+        search: "Pesquisar:",
+        paginate: {
+          previous: "<",
+          next: ">",
+        },
+      },
+      initComplete: function () {
+        applyCustomStyles();
+      },
+      drawCallback: function () {
+        applyCustomStyles();
+      },
+    });
+    $(window).on("resize", function () {
+      table.columns.adjust();
+      applyCustomStyles();
+    });
+  });
 }
